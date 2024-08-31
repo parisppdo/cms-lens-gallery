@@ -16,7 +16,7 @@
                             Welcome to admin
                             <small>Author</small>
                         </h1>
-                        <div class="col-xs-6">
+                        <div class="col-xs-6">                            
                             <?php
                                 if (isset($_POST['submit'])) {
                                     $lens_name = $_POST['lens_name'];
@@ -38,20 +38,23 @@
                             ?>
                             <form action="" method="post">
                                 <div class="form-group">
+                                    <label for="lens_name">Add Lens</label>
                                     <input type="text" class="form-control" name="lens_name">
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-primary" type="submit" name="submit" value="Add Lens">
                                 </div>
                             </form>
+                            <?php
+                            
+                                if (isset($_GET['edit'])) {
+                                    $lens_id = $_GET['edit'];
+                                    include "includes/update_lenses.php";
+                                }
+                            
+                            ?>
                         </div><!--Add Lens Form-->
                         <div class="col-xs-6">
-                        <?php
-
-                        $query = "SELECT * FROM lenses";
-                        $select_lenses = mysqli_query($connection, $query);
-
-                        ?>
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -61,17 +64,31 @@
                                 </thead>
                                 <tbody>
                                 <?php
+                                    // FIND ALL LENSES QUERY
+                                    $query = "SELECT * FROM lenses";
+                                    $select_lenses = mysqli_query($connection, $query);
+                                    
+                                    while ($row = mysqli_fetch_assoc($select_lenses)) {
+                                        $lens_id = $row['lens_id'];
+                                        $lens_name = $row['lens_name'];
 
-                                while ($row = mysqli_fetch_assoc($select_lenses)) {
-                                    $lens_id = $row['lens_id'];
-                                    $lens_name = $row['lens_name'];
-
-                                    echo "<tr>";
-                                    echo "<td>{$lens_id}</td>";
-                                    echo "<td>{$lens_name}</td>";
-                                    echo "<tr>";
-                                }
-
+                                        echo "<tr>";
+                                        echo "<td>{$lens_id}</td>";
+                                        echo "<td>{$lens_name}</td>";
+                                        echo "<td><a href='lenses.php?delete={$lens_id}'>Delete</a></td>";
+                                        echo "<td><a href='lenses.php?edit={$lens_id}'>Edit</a></td>";
+                                        echo "<tr>";
+                                    }
+                                ?>
+                                <?php
+                                    if (isset($_GET['delete'])) {
+                                        $lens_to_delete_id = $_GET['delete'];
+                                        $query = "DELETE FROM lenses WHERE lens_id = {$lens_to_delete_id}";
+                                        $delete_query = mysqli_query($connection, $query);
+                                        header("Location: lenses.php");
+                                    }
+                                
+                                
                                 ?>
                                 </tbody>
                             </table>
