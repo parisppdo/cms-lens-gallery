@@ -33,7 +33,8 @@
 
                                     while ($row = mysqli_fetch_assoc($select_all_lenses_sidebar)) {
                                         $lens_name = $row['lens_name'];
-                                        echo "<li><a href='#'>{$lens_name}</a></li>";
+                                        $lens_id= $row['lens_id'];
+                                        echo "<li><a href='lens.php?lens_id={$lens_id}'>{$lens_name}</a></li>";
                                     }
 
                                 ?>
