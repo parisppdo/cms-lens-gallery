@@ -1,4 +1,10 @@
 <?php
+function confirm_query($connection, $result) {  
+    if (!$result) {
+        die("QUERY FAILED ." . mysqli_error($connection));
+    }
+}
+
 function add_lens($connection) {
     //global $connection;
     if (isset($_POST['submit'])) {

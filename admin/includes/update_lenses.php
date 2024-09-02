@@ -5,10 +5,10 @@
             if (isset($_GET['edit'])) {
                 $lens_to_edit_id = $_GET['edit'];
                 $query = "SELECT * FROM lenses WHERE lens_id = {$lens_to_edit_id}";
-                $select_lense = mysqli_query($connection, $query);
+                $select_lens = mysqli_query($connection, $query);
                 
                 // WHILE LOOP MIGHT BE OBSOLETE HERE
-                while ($row = mysqli_fetch_assoc($select_lense)) {
+                while ($row = mysqli_fetch_assoc($select_lens)) {
                     $lens_id = $row['lens_id'];
                     $lens_name = $row['lens_name'];    
         ?>
