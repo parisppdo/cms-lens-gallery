@@ -76,6 +76,24 @@
             ?>
         </select>
     </div>
+    <div class="form-group"> <!-- THIS MIGHT BE OBSOLETE. INSTRUCTOR PASTED IT FROM add_user. HE DIDNT HAVE A QUERY, BUT I DO. RIGHT ABOVE -->
+        <label for="post_lens">Choose Role</label>
+        <select name="user_role" id="">
+            <?php
+                // PERHAPS HARDCODE THE OPTIONS INSTEAD OF FINDING IN DATABASE
+                $query = "SELECT * FROM users";
+                $select_users = mysqli_query($connection, $query);
+                confirm_query($connection, $select_users);
+                
+                while ($row = mysqli_fetch_assoc($select_users)) {
+                    $user_id = $row['user_id'];
+                    $user_role = $row['user_role'];   
+                
+                    echo "<option value='{$user_id}'>{$user_role}</option>";
+                } 
+            ?>
+        </select>
+    </div>
     <div class="form-group">
         <label for="title">Post Author</label>
         <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="author">
