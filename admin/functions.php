@@ -21,6 +21,7 @@ function add_lens($connection) {
             if (!$create_lens_query) {
                 die('QUERY FAILED' . mysqli_error($connection));
             }
+            header("Location: lenses.php");
         }
     }
 }

@@ -51,6 +51,7 @@
 
         $update_post = mysqli_query($connection, $query);
         confirm_query($connection, $update_post);
+        header("Location: posts.php");
     }
 ?>
 

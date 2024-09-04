@@ -1,123 +1,91 @@
 <?php
-    if (isset($_GET['p_id'])) {
-        $post_to_edit_id = $_GET['p_id'];
+    if (isset($_GET['edit_user'])) {
+        $user_to_edit_id = $_GET['edit_user'];
     }
-    $query = "SELECT * FROM posts WHERE post_id = {$post_to_edit_id}";
-    $select_posts_by_id = mysqli_query($connection, $query);
+    $query = "SELECT * FROM users WHERE user_id = {$user_to_edit_id}";
+    $select_users_by_id = mysqli_query($connection, $query);
     
-    while ($row = mysqli_fetch_assoc($select_posts_by_id)) {
-        $post_id = $row['post_id'];
-        $post_author = $row['post_author'];
-        $post_title = $row['post_title'];
-        $post_lens_id = $row['post_lens_id'];
-        $post_status = $row['post_status'];
-        $post_content = $row['post_content'];
-        $post_tags = $row['post_tags'];
-        $post_comment_count = $row['post_comment_count'];
-        $post_date = $row['post_date'];
-        $post_image = $row['post_image'];
+    while ($row = mysqli_fetch_assoc($select_users_by_id)) {
+        $user_id = $row['user_id'];
+        $username = $row['username'];
+        $user_password = $row['user_password'];
+        $user_role = $row['user_role'];
+        $user_firstname = $row['user_firstname'];
+        $user_lastname = $row['user_lastname'];
+        $user_image = $row['user_image'];
+        $user_email = $row['user_email'];
     }
 
-    if (isset($_POST['update_post'])) {
-        $post_author = $_POST['author'];
-        $post_title = $_POST['title'];
-        $post_lens_id = $_POST['post_lens_id'];
-        $post_status = $_POST['post_status'];
-        $post_image = $_FILES['image']['name'];
-        $post_image_temp = $_FILES['image']['tmp_name'];
-        $post_content = $_POST['post_content'];
-        $post_tags = $_POST['post_tags'];
+    if (isset($_POST['edit_user'])) {
+        $username = $_POST['username'];
+        $user_password = $_POST['user_password'];
+        $user_role = $_POST['user_role'];
+        $user_firstname = $_POST['user_firstname'];
+        $user_lastname = $_POST['user_lastname'];
+        $user_email = $_POST['user_email'];
 
-        move_uploaded_file($post_image_temp, "../images/$post_image");
-        if (empty($post_image)) {
-            $query = "SELECT * FROM posts WHERE post_id = $post_to_edit_id ";
-            $select_image = mysqli_query($connection, $query);
+        $query = "UPDATE users SET ";
+        $query .= "username = '{$username}', ";
+        $query .= "user_password = '{$user_password}', ";
+        $query .= "user_role = '{$user_role}', ";
+        $query .= "user_firstname = '{$user_firstname}', ";
+        $query .= "user_lastname = '{$user_lastname}', ";
+        $query .= "user_email = '{$user_email}' ";
+        $query .= "WHERE user_id = {$user_to_edit_id}";
 
-            while ($row = mysqli_fetch_array($select_image)) {
-                $post_image = $row['post_image'];
-            }
-        }
-
-        $query = "UPDATE posts SET ";
-        $query .= "post_title = '{$post_title}', ";
-        $query .= "post_lens_id = '{$post_lens_id}', ";
-        $query .= "post_date = now(), ";
-        $query .= "post_author = '{$post_author}', ";
-        $query .= "post_status = '{$post_status}', ";
-        $query .= "post_tags = '{$post_tags}', ";
-        $query .= "post_content = '{$post_content}', ";
-        $query .= "post_image = '{$post_image}' ";
-        $query .= "WHERE post_id = {$post_to_edit_id}";
-
-        $update_post = mysqli_query($connection, $query);
-        confirm_query($connection, $update_post);
+        $update_user = mysqli_query($connection, $query);
+        confirm_query($connection, $update_user);
+        header("Location: users.php");
     }
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="title">Post Title</label>
-            <input value="<?php echo $post_title; ?>" type="text" class="form-control" name="title">
+        <label for="">Username</label>
+        <input type="text" class="form-control" name="username" value="<?php echo $username; ?>">
     </div>
+
     <div class="form-group">
-        <select name="post_lens_id" id="">
-            <?php
-                $query = "SELECT * FROM lenses";
-                $select_lens = mysqli_query($connection, $query);
-                confirm_query($connection, $select_lens);
-                
-                //WHILE LOOP MIGHT BE OBSOLETE HERE
-                while ($row = mysqli_fetch_assoc($select_lens)) {
-                    $lens_id = $row['lens_id'];
-                    $lens_name = $row['lens_name'];   
-                
-                    echo "<option value='{$lens_id}'>{$lens_name}</option>";
-                } 
-            ?>
+        <label for="">Password</label>
+        <input type="password" class="form-control" name="user_password" value="<?php echo $user_password; ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="role">Select Role</label>
+        <select name="user_role" id="role">
+            <option value="subscriber"><?php echo $user_role;?></option>
+            <?php 
+                if ($user_role == 'admin') {
+                    echo "<option value='subscriber'>subscriber</option>";
+                }
+                else {
+                    echo "<option value='admin'>admin</option>";
+                }
+            ?>      
         </select>
     </div>
-    <div class="form-group"> <!-- THIS MIGHT BE OBSOLETE. INSTRUCTOR PASTED IT FROM add_user. HE DIDNT HAVE A QUERY, BUT I DO. RIGHT ABOVE -->
-        <label for="post_lens">Choose Role</label>
-        <select name="user_role" id="">
-            <?php
-                // PERHAPS HARDCODE THE OPTIONS INSTEAD OF FINDING IN DATABASE
-                $query = "SELECT * FROM users";
-                $select_users = mysqli_query($connection, $query);
-                confirm_query($connection, $select_users);
-                
-                while ($row = mysqli_fetch_assoc($select_users)) {
-                    $user_id = $row['user_id'];
-                    $user_role = $row['user_role'];   
-                
-                    echo "<option value='{$user_id}'>{$user_role}</option>";
-                } 
-            ?>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="title">Post Author</label>
-        <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="author">
-    </div>
-    <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input value="<?php echo $post_status; ?>" type="text" class="form-control" name="post_status">
-    </div>
-    <div class="form-group">
+
+    <!-- <div class="form-group">
         <label for="post_image">Post Image</label>
-    </div>
-        <div class="form-group">
-        <img src="../images/<?php echo $post_image; ?>" width="100" alt="">
         <input type="file" name="image">
-    </div>
+    </div> -->
+
     <div class="form-group">
-        <label for="post_tags">Post Tags</label>
-        <input value="<?php echo $post_tags; ?>"type="text" class="form-control" name="post_tags">
+        <label for="">First Name</label>
+        <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname; ?>">
     </div>
+
     <div class="form-group">
-        <label for="post_content">Post Content</label>
-        <textarea class="form-control" name="post_content" id="" cols="30" rows="10"><?php echo $post_content; ?></textarea>
+        <label for="">Last Name</label>
+        <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname; ?>">
     </div>
+
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" name="update_post" value="Update Post">
+        <label for="">E-mail</label>
+        <input type="text" class="form-control" name="user_email" value="<?php echo $user_email; ?>">
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" name="edit_user" value="Update User">
     </div>
 </form>

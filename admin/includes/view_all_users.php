@@ -55,8 +55,9 @@
 
                 // echo "<td><a href='../post.php?p_id={$post_id}'>$post_title</a></td>";
                 echo "<td>-</td>";
-                echo "<td><a href='comments.php?approve={$user_id}'>Approve</a></td>";
-                echo "<td><a href='comments.php?unapprove={$user_id}'>Unapprove</a></td>";
+                echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+                echo "<td><a href='users.php?change_to_sub={$user_id}'>Subscriber</a></td>";
+                echo "<td><a href='users.php?source=edit_user&edit_user={$user_id}'>Edit</a></td>";
                 echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
                 echo "</tr>";
             }
@@ -65,20 +66,20 @@
 </table>  
 
 <?php
-    if (isset($_GET['approve'])) {
-        $comment_to_approve_id = $_GET['approve'];
+    if (isset($_GET['change_to_sub'])) {
+        $change_to_sub_id = $_GET['change_to_sub'];
         
-        $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$comment_to_approve_id}";
-        $approve_query = mysqli_query($connection, $query);
-        header("Location: comments.php");
+        $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = {$change_to_sub_id}";
+        $change_to_sub_query = mysqli_query($connection, $query);
+        header("Location: users.php");
     }
 
-    if (isset($_GET['unapprove'])) {
-        $comment_to_unapprove_id = $_GET['unapprove'];
+    if (isset($_GET['change_to_admin'])) {
+        $change_to_admin_id = $_GET['change_to_admin'];
         
-        $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$comment_to_unapprove_id}";
-        $unapprove_query = mysqli_query($connection, $query);
-        header("Location: comments.php");
+        $query = "UPDATE users SET user_role = 'admin' WHERE user_id = {$change_to_admin_id}";
+        $change_to_admin_query = mysqli_query($connection, $query);
+        header("Location: users.php");
     }
 
     if (isset($_GET['delete'])) {

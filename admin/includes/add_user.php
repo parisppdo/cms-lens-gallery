@@ -16,6 +16,7 @@
         $create_user_query = mysqli_query($connection, $query);
 
         confirm_query($connection, $create_user_query);
+        header("Location: users.php");
     }
 ?>
 
