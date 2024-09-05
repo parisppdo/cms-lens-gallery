@@ -22,13 +22,14 @@ if (isset($_POST['login'])) {
         $user_role = $row['user_role'];
     }
 
-    if ($username === $user_username && $password === $user_password) {
+    if ($username === $user_username && $password === $user_password) {        
+        $_SESSION['user_id'] = $user_id;
         $_SESSION['username'] = $user_username;
         $_SESSION['firstname'] = $user_firstname;
         $_SESSION['lastname'] = $user_lastname;
         $_SESSION['user_role'] = $user_role;
 
-        header ("Location: ../admin.php");
+        header ("Location: ../admin/index.php");
     }
     else {
         header ("Location: ../index.php");
