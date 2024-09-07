@@ -31,7 +31,13 @@
                                         <i class="fa fa-file-text fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                <div class='huge'>12</div>
+                                        <?php 
+                                            $query = "SELECT * FROM posts";
+                                            $select_all_posts = mysqli_query($connection, $query);
+                                            $post_count = mysqli_num_rows($select_all_posts);
+                                            
+                                            echo "<div class='huge'>$post_count</div>";
+                                        ?>
                                         <div>Posts</div>
                                     </div>
                                 </div>
@@ -53,7 +59,13 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <div class='huge'>23</div>
+                                        <?php 
+                                                $query = "SELECT * FROM comments";
+                                                $select_all_comments = mysqli_query($connection, $query);
+                                                $comment_count = mysqli_num_rows($select_all_comments);
+                                                
+                                                echo "<div class='huge'>$comment_count</div>";
+                                            ?>
                                     <div>Comments</div>
                                     </div>
                                 </div>
@@ -75,7 +87,13 @@
                                         <i class="fa fa-user fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <div class='huge'>23</div>
+                                        <?php 
+                                                $query = "SELECT * FROM users";
+                                                $select_all_users = mysqli_query($connection, $query);
+                                                $user_count = mysqli_num_rows($select_all_users);
+                                                
+                                                echo "<div class='huge'>$user_count</div>";
+                                            ?>
                                         <div> Users</div>
                                     </div>
                                 </div>
@@ -97,12 +115,18 @@
                                         <i class="fa fa-list fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class='huge'>13</div>
-                                        <div>Categories</div>
+                                        <?php 
+                                            $query = "SELECT * FROM lenses";
+                                            $select_all_lenses = mysqli_query($connection, $query);
+                                            $lens_count = mysqli_num_rows($select_all_lenses);
+                                            
+                                            echo "<div class='huge'>$lens_count</div>";
+                                        ?>
+                                        <div>Lenses</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="categories.php">
+                            <a href="lenses.php">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -113,6 +137,32 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                
+                <div class="row">
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['bar']});
+                        google.charts.setOnLoadCallback(drawChart);
+
+                        function drawChart() {
+                            var data = google.visualization.arrayToDataTable([
+                            ['Data', 'Count'],
+                            ['Posts', 1000]
+                            ]);
+
+                            var options = {
+                            chart: {
+                                title: '',
+                                subtitle: '',
+                            }
+                            };
+
+                            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                            chart.draw(data, google.charts.Bar.convertOptions(options));
+                        }
+                    </script>
+                    <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+                </div>
 
             </div>
             <!-- /.container-fluid -->
