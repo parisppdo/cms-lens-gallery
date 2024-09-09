@@ -1,4 +1,8 @@
 <?php
+    if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
+        echo "<p class='bg-success'>User added successfully.</p>";
+    }
+
     if (isset($_POST['create_user'])) {
         $username = $_POST['username'];
         $user_password = $_POST['user_password'];
@@ -16,7 +20,7 @@
         $create_user_query = mysqli_query($connection, $query);
 
         confirm_query($connection, $create_user_query);
-        header("Location: users.php");
+        header("Location: users.php?source=add_user&upload=success");
     }
 ?>
 

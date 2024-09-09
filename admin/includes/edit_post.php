@@ -2,6 +2,7 @@
     if (isset($_GET['p_id'])) {
         $post_to_edit_id = $_GET['p_id'];
     }
+
     $query = "SELECT * FROM posts WHERE post_id = {$post_to_edit_id}";
     $select_posts_by_id = mysqli_query($connection, $query);
     
@@ -16,6 +17,11 @@
         $post_comment_count = $row['post_comment_count'];
         $post_date = $row['post_date'];
         $post_image = $row['post_image'];
+    }
+
+    if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
+        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_id}'>View Post</a>
+        or <a href='posts.php'>Edit More Posts</a> </p>";
     }
 
     if (isset($_POST['update_post'])) {
@@ -51,7 +57,8 @@
 
         $update_post = mysqli_query($connection, $query);
         confirm_query($connection, $update_post);
-        header("Location: posts.php");
+
+        header("Location: posts.php?source=edit_post&p_id={$post_to_edit_id}&upload=success");
     }
 ?>
 
