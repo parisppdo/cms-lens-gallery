@@ -28,6 +28,14 @@
                     <small>Secondary Text</small>
                 </h1>
 
+                 <!-- Comment submit message -->
+                <?php
+                    if (isset($_GET['action']) && $_GET['action'] == 'submitted') {
+                        echo "<p class='bg-success'>Comment submitted for approval!</p>";
+                    }
+                
+                ?>
+
                 <!-- First Blog Post -->
                 <h2>
                     <a href="#"><?php echo $post_title ?></a>
@@ -56,29 +64,35 @@
                         $comment_author = $_POST['comment_author'];
                         $comment_email = $_POST['comment_email'];
                         $comment_content = $_POST['comment_content'];
-                        
-                        $query = "INSERT INTO comments (";
-                        $query .= "comment_post_id, ";
-                        $query .= "comment_author, ";
-                        $query .= "comment_email, ";
-                        $query .= "comment_content, ";
-                        $query .= "comment_status, ";
-                        $query .= "comment_date) ";
-                        $query .= "VALUES (";
-                        $query .= "$post_id, ";
-                        $query .= "'{$comment_author}', ";
-                        $query .= "'{$comment_email}', ";
-                        $query .= "'{$comment_content}', ";
-                        $query .= "'unapproved', ";
-                        $query .= "now())";
 
-                        $create_comment_query = mysqli_query($connection, $query);
-                        confirm_query($connection, $create_comment_query);
-                        
-                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                        $query .= "WHERE post_id = {$post_id}";
-                        $increase_comment_count = mysqli_query($connection, $query);
-                        confirm_query($connection, $increase_comment_count);
+                        if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+                            $query = "INSERT INTO comments (";
+                            $query .= "comment_post_id, ";
+                            $query .= "comment_author, ";
+                            $query .= "comment_email, ";
+                            $query .= "comment_content, ";
+                            $query .= "comment_status, ";
+                            $query .= "comment_date) ";
+                            $query .= "VALUES (";
+                            $query .= "$post_id, ";
+                            $query .= "'{$comment_author}', ";
+                            $query .= "'{$comment_email}', ";
+                            $query .= "'{$comment_content}', ";
+                            $query .= "'unapproved', ";
+                            $query .= "now())";
+    
+                            $create_comment_query = mysqli_query($connection, $query);
+                            confirm_query($connection, $create_comment_query);
+
+                            $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                            $query .= "WHERE post_id = {$post_id}";
+                            $increase_comment_count = mysqli_query($connection, $query);
+                            confirm_query($connection, $increase_comment_count);
+                            header("Location: post.php?p_id=23&action=submitted");
+                        }
+                        else {
+                            echo "<script>alert('Fields cannot be empty')</script>";
+                        }
                     }
                 ?>
                 <!-- Comments Form -->

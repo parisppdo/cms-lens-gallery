@@ -14,7 +14,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to admin
-                            <small>Author</small>
+                            <small><?php echo $_SESSION['username']; ?></small>
                         </h1>
                         <div class="col-xs-6">                            
                             <?php add_lens($connection); ?> <!--ADD LENSES QUERY-->

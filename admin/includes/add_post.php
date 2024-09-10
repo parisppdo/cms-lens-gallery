@@ -1,4 +1,5 @@
 <?php
+
     if (isset($_POST['create_post'])) {
         $post_title = $_POST['title'];
         $post_author = $_POST['author'];
@@ -21,9 +22,8 @@
         $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
 
         $create_post_query = mysqli_query($connection, $query);
-
         confirm_query($connection, $create_post_query);
-        header("Location: posts.php");
+        header("Location: posts.php?upload=success");
     }
 ?>
 
@@ -56,7 +56,11 @@
     </div>
     <div class="form-group">
         <label for="post_status">Post Status</label>
-        <input type="text" class="form-control" name="post_status">
+        <select name="post_status" id="">
+            <option value="" selected hidden>Select Options</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+        </select>
     </div>
     <div class="form-group">
         <label for="post_image">Post Image</label>
