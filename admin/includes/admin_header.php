@@ -39,6 +39,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+    <!-- MY OWN CSS STYLES -->
+    <link rel="stylesheet" href="css/styles.css"><!--LOCAL LINK-->
+    
     <!-- JQUERY FOR WYSIWYG EDITOR -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> ONLINE LINK-->
     <link rel="stylesheet" href="css/summernote.css"><!--LOCAL LINK-->
