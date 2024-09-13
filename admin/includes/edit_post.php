@@ -19,8 +19,13 @@
         $post_image = $row['post_image'];
     }
 
-    if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
-        echo "<p class='bg-success'>Post Updated. <a href='../post.php?p_id={$post_id}'>View Post</a>
+    if (isset($_GET['action']) && $_GET['action'] == 'upload') {
+        echo "<p class='bg-success'>Post updated successfuly! <a href='../post.php?p_id={$post_id}'>View Post</a>
+        or <a href='posts.php'>Edit More Posts</a> </p>";
+    }
+
+    if (isset($_GET['action']) && $_GET['action'] == 'reset') {
+        echo "<p class='bg-success'>Post views reset successfully! <a href='../post.php?p_id={$post_id}'>View Post</a>
         or <a href='posts.php'>Edit More Posts</a> </p>";
     }
 
@@ -58,7 +63,17 @@
         $update_post = mysqli_query($connection, $query);
         confirm_query($connection, $update_post);
 
-        header("Location: posts.php?source=edit_post&p_id={$post_to_edit_id}&upload=success");
+        header("Location: posts.php?source=edit_post&p_id={$post_to_edit_id}&action=upload");
+    }
+
+    if (isset($_POST['reset_views'])) {
+        $query = "UPDATE posts SET post_views_count = 0 ";
+        $query .= "WHERE post_id =" . mysqli_real_escape_string($connection, $post_id);
+        
+        $reset_query = mysqli_query($connection, $query);
+        confirm_query($connection, $reset_query);
+
+        header("Location: posts.php?source=edit_post&p_id={$post_to_edit_id}&action=reset");
     }
 ?>
 
@@ -120,6 +135,11 @@
     <div class="form-group">
         <label for="post_tags">Post Tags</label>
         <input value="<?php echo $post_tags; ?>"type="text" class="form-control" name="post_tags">
+    </div>
+
+    <div class="form-group">
+        <label for="reset_views">Post Views</label>
+        <input type="submit" class="btn btn-primary" name="reset_views" value="Reset">
     </div>
     
     <div class="form-group">
