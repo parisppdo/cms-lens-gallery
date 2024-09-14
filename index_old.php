@@ -10,29 +10,7 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <?php
-                    $posts_per_page = 5;
-
-                    if (isset($_GET['page'])) {
-                        $page = $_GET['page'];
-                    }
-                    else {
-                        $page = "";
-                    }
-
-                    if ($page == "" || $page == 1) {
-                        $offset = 0;
-                    } 
-                    else {
-                        $offset = ($page * $posts_per_page) - $posts_per_page;
-                    } 
-
                     $query = "SELECT * FROM posts";
-                    $post_count_query = mysqli_query($connection, $query);
-                    $count = mysqli_num_rows($post_count_query);
-
-                    $count = ceil($count / $posts_per_page);
-
-                    $query = "SELECT * FROM posts LIMIT $offset, $posts_per_page";
                     $select_all_posts_query = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $post_id = $row['post_id'];
@@ -81,17 +59,5 @@
         <!-- /.row -->
 
         <hr>
-        <ul class="pager">
-            <?php
-                for ($i = 1; $i <=$count; $i++) {
-                    if ($i == $page) {
-                        echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
-                    }
-                    else {
-                        echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
-                    }
-                }
-            ?>
-        </ul>
 
 <?php include "includes/footer.php"; ?>
