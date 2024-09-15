@@ -20,3 +20,13 @@ $(document).ready(function(){
         }
     })
 });
+
+// Showing online users in admin navigation
+function loadUsersOnline() {
+    $.get("includes/online_users.php?onlineusers=result", function(data) {
+        $(".usersonline").text(data);
+    });
+}
+setInterval(function() {
+    loadUsersOnline();
+}, 500); // function is called every 500msec = 0,5sec
