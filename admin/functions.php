@@ -1,4 +1,27 @@
 <?php
+
+function users_online($connection) {
+    $session = session_id();
+            $current_time = time();
+            $inactive_threshold = 60;
+            $inactive_limit = $current_time - $inactive_threshold;
+
+            $query = "SELECT * FROM users_online WHERE session = '$session'";
+            $select_online_users_query = mysqli_query($connection, $query);
+            confirm_query($connection, $select_online_users_query);
+            $count = mysqli_num_rows($select_online_users_query);
+
+            if ($count == null) {
+                mysqli_query($connection, "INSERT INTO users_online (session, last_activity_time) VALUES ('$session', '$current_time')");
+            }
+            else {
+                mysqli_query($connection, "UPDATE users_online SET last_activity_time = '$current_time' WHERE session = '$session'");
+            }
+
+            $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE last_activity_time >= '$inactive_limit'");
+            return $users_online = mysqli_num_rows($users_online_query);
+}
+
 function confirm_query($connection, $result) {  
     if (!$result) {
         die("QUERY FAILED ." . mysqli_error($connection));
