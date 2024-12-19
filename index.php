@@ -7,6 +7,11 @@
 
         <div class="row">
 
+        <h1 class="page-header">
+            Vintage Lens Blog<br>
+            <small>Photos by old manual lenses!</small>
+        </h1>
+
             <!-- Blog Entries Column -->
             <div class="col-md-8">
                 <?php
@@ -46,11 +51,6 @@
                         if ($post_status == 'published') {
                    
                 ?>
-                            <h1 class="page-header">
-                                Page Heading
-                                <small>Secondary Text</small>
-                            </h1>
-
                             <!-- First Blog Post -->
                             <h2>
                                 <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>

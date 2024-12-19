@@ -28,8 +28,8 @@
                             $post_content = $row['post_content'];  
                     ?>
                         <h1 class="page-header">
-                            Page Heading
-                            <small>Secondary Text</small>
+                            Vintage Lens Blog<br>
+                            <small>Photos by old manual lenses!</small>
                         </h1>
 
                         <!-- Comment submit message -->
