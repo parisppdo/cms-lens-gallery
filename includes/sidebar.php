@@ -61,7 +61,7 @@
                     <!-- /.row -->
                 </div>
 
-                <!-- Side Widget Well -->
-                <?php include "widget.php"; ?>                        
+                <!-- Latest Posts Widget -->
+                <?php include "latest_posts_widget.php"; ?>                        
 
             </div>
