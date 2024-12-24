@@ -1,4 +1,5 @@
 <?php include "includes/admin_header.php"; ?>
+<?php if (isSubscriber()) header("Location: ./index.php"); ?>
 
     <div id="wrapper">
 

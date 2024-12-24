@@ -41,6 +41,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php if (isAdmin()): ?>
                         <a href="posts.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
@@ -48,6 +49,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -69,6 +71,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php if (isAdmin()): ?>
                         <a href="comments.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
@@ -76,6 +79,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -97,6 +101,7 @@
                                 </div>
                             </div>
                         </div>
+                        <?php if (isAdmin()): ?>
                         <a href="users.php">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
@@ -104,6 +109,7 @@
                                 <div class="clearfix"></div>
                             </div>
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
