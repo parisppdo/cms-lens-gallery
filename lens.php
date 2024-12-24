@@ -25,8 +25,8 @@
                 $post_content = substr($row['post_content'], 0, 100);
                 ?>
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Vintage Lens Blog<br>
+                    <small>Photos by old manual lenses!</small>
                 </h1>
 
                 <!-- First Blog Post -->

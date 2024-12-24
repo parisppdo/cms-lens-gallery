@@ -45,17 +45,30 @@
         <h4>View Post By Lens</h4>
         <div class="row">
             <div class="col-lg-12">
-                <ul class="list-unstyled">
-                    <?php
+                <form action="./lens.php" method="get">
+                    <select name='lens_id' id='lens_id' class=''>
+                        <option value='-1'>Select Lens</option>
+                        <?php
 
-                    while ($row = mysqli_fetch_assoc($select_all_lenses_sidebar)) {
-                        $lens_name = $row['lens_name'];
-                        $lens_id = $row['lens_id'];
-                        echo "<li><a href='lens.php?lens_id={$lens_id}'>{$lens_name}</a></li>";
-                    }
-
-                    ?>
-                </ul>
+                        while ($row = mysqli_fetch_assoc($select_all_lenses_sidebar)) {
+                            $lens_name = $row['lens_name'];
+                            $lens_id = $row['lens_id'];
+                            echo "<option value='$lens_id'>$lens_name</option>";
+                        }
+                        ?>
+                    </select>
+                </form>
+                <script type="text/javascript">
+                    (function() {
+                        var dropdown = document.getElementById( "lens_id" );
+                        function onLensChange() {
+                            if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+                                dropdown.parentNode.submit();
+                            }
+                        }
+                        dropdown.onchange = onLensChange;
+                    })();
+                </script>
             </div>
         </div>
         <!-- /.row -->
