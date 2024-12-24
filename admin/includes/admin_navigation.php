@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.php">CMS Admin</a>
+        <a class="navbar-brand" href="index.php">CMS</a>
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
@@ -35,24 +35,32 @@
             <li>
                 <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
+
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i
                             class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="posts_dropdown" class="collapse">
+                    <?php if (isAdmin()): ?>
                     <li>
                         <a href="./posts.php"> View all posts </a>
                     </li>
+                    <?php endif; ?>
                     <li>
                         <a href="posts.php?source=add_post"> Add posts </a>
                     </li>
                 </ul>
             </li>
+
             <li>
                 <a href="./lenses.php"><i class="fa fa-fw fa-wrench"></i> Lenses </a>
             </li>
+
+            <?php if (isAdmin()): ?>
+
             <li class="">
                 <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments </a>
             </li>
+
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i>
                     Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -65,6 +73,9 @@
                     </li>
                 </ul>
             </li>
+
+            <?php endif; ?>
+
             <li>
                 <a href="./profile.php"><i class="fa fa-fw fa-dashboard"></i> Profile</a>
             </li>

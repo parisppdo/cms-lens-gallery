@@ -83,4 +83,15 @@ function delete_lens($connection)
     }
 }
 
+function isAdmin() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+}
+
+function isSubscriber() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'subscriber';
+}
+
+function isUser() {
+    return !isset($_SESSION['user_role']);
+}
 ?>

@@ -5,7 +5,7 @@
 
 <?php
 // All logged in users can enter. Admins & subscribers
-if (!isset($_SESSION['user_role'])) {
+if (isUser()) {
     header("Location: ../index.php");
 }
 ?>
