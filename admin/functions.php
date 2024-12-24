@@ -1,6 +1,7 @@
 <?php
 
-function users_online($connection) {
+function users_online($connection)
+{
     if (isset($_GET['onlineusers'])) {
         $session = session_id();
         $current_time = time();
@@ -14,34 +15,33 @@ function users_online($connection) {
 
         if ($count == null) {
             mysqli_query($connection, "INSERT INTO users_online (session, last_activity_time) VALUES ('$session', '$current_time')");
-        }
-        else {
+        } else {
             mysqli_query($connection, "UPDATE users_online SET last_activity_time = '$current_time' WHERE session = '$session'");
         }
 
         $users_online_query = mysqli_query($connection, "SELECT * FROM users_online WHERE last_activity_time >= '$inactive_limit'");
         return $users_online = mysqli_num_rows($users_online_query);
-    }
-    else {
+    } else {
         return "Error";
     }
 }
 
 
-function confirm_query($connection, $result) {  
+function confirm_query($connection, $result)
+{
     if (!$result) {
         die("QUERY FAILED ." . mysqli_error($connection));
     }
 }
 
-function add_lens($connection) {
+function add_lens($connection)
+{
     //global $connection;
     if (isset($_POST['submit'])) {
         $lens_name = $_POST['lens_name'];
         if ($lens_name == "" || empty($lens_name)) {
             echo "This field should not be empty";
-        }
-        else {
+        } else {
             $query = "INSERT INTO lenses(lens_name) ";
             $query .= "VALUE('{$lens_name}')";
 
@@ -55,10 +55,11 @@ function add_lens($connection) {
     }
 }
 
-function find_all_lenses($connection) {
+function find_all_lenses($connection)
+{
     $query = "SELECT * FROM lenses";
     $select_lenses = mysqli_query($connection, $query);
-    
+
     while ($row = mysqli_fetch_assoc($select_lenses)) {
         $lens_id = $row['lens_id'];
         $lens_name = $row['lens_name'];
@@ -72,7 +73,8 @@ function find_all_lenses($connection) {
     }
 }
 
-function delete_lens($connection) {
+function delete_lens($connection)
+{
     if (isset($_GET['delete'])) {
         $lens_to_delete_id = $_GET['delete'];
         $query = "DELETE FROM lenses WHERE lens_id = {$lens_to_delete_id}";

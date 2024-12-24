@@ -1,27 +1,27 @@
 <?php
-    if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
-        echo "<p class='bg-success'>User added successfully.</p>";
-    }
+if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
+    echo "<p class='bg-success'>User added successfully.</p>";
+}
 
-    if (isset($_POST['create_user'])) {
-        $username = $_POST['username'];
-        $user_password = $_POST['user_password'];
-        $user_role = $_POST['user_role'];
-        $user_firstname = $_POST['user_firstname'];
-        $user_lastname = $_POST['user_lastname'];
-        $user_email = $_POST['user_email'];
+if (isset($_POST['create_user'])) {
+    $username = $_POST['username'];
+    $user_password = $_POST['user_password'];
+    $user_role = $_POST['user_role'];
+    $user_firstname = $_POST['user_firstname'];
+    $user_lastname = $_POST['user_lastname'];
+    $user_email = $_POST['user_email'];
 
-        $query = "INSERT INTO users";
-        $query .= "(username, user_password, user_firstname, user_lastname, user_email, ";
-        $query .= "user_role) ";
-        $query .= "VALUES ('{$username}', '{$user_password}', '{$user_firstname}', '{$user_lastname}', ";
-        $query .= "'{$user_email}', '{$user_role}')";
+    $query = "INSERT INTO users";
+    $query .= "(username, user_password, user_firstname, user_lastname, user_email, ";
+    $query .= "user_role) ";
+    $query .= "VALUES ('{$username}', '{$user_password}', '{$user_firstname}', '{$user_lastname}', ";
+    $query .= "'{$user_email}', '{$user_role}')";
 
-        $create_user_query = mysqli_query($connection, $query);
+    $create_user_query = mysqli_query($connection, $query);
 
-        confirm_query($connection, $create_user_query);
-        header("Location: users.php?source=add_user&upload=success");
-    }
+    confirm_query($connection, $create_user_query);
+    header("Location: users.php?source=add_user&upload=success");
+}
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -39,7 +39,7 @@
         <label for="role">Select Role</label>
         <select name="user_role" id="role">
             <option value="subscriber">Subscriber</option>
-            <option value="admin">Admin</option>       
+            <option value="admin">Admin</option>
         </select>
     </div>
 

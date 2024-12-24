@@ -3,5 +3,5 @@
 <?php include "../../includes/db.php"; ?>
 
 <?php
-    echo users_online($connection);
+echo users_online($connection);
 ?>

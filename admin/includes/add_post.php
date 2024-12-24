@@ -1,52 +1,52 @@
 <?php
 
-    if (isset($_POST['create_post'])) {
-        $post_title = $_POST['title'];
-        $post_author = $_POST['author'];
-        $post_lens_id = $_POST['post_lens_id'];
-        $post_status = $_POST['post_status'];
+if (isset($_POST['create_post'])) {
+    $post_title = $_POST['title'];
+    $post_author = $_POST['author'];
+    $post_lens_id = $_POST['post_lens_id'];
+    $post_status = $_POST['post_status'];
 
-        $post_image = $_FILES['image']['name'];
-        $post_image_temp = $_FILES['image']['tmp_name'];
-        
-        $post_tags = $_POST['post_tags'];
-        $post_content = $_POST['post_content'];
-        $post_date = date('d-m-y');
+    $post_image = $_FILES['image']['name'];
+    $post_image_temp = $_FILES['image']['tmp_name'];
 
-        move_uploaded_file($post_image_temp, "../images/$post_image");
+    $post_tags = $_POST['post_tags'];
+    $post_content = $_POST['post_content'];
+    $post_date = date('d-m-y');
 
-        $query = "INSERT INTO posts";
-        $query .= "(post_lens_id, post_title, post_author, post_date, post_image, ";
-        $query .= "post_content, post_tags, post_status) ";
-        $query .= "VALUES ('{$post_lens_id}', '{$post_title}', '{$post_author}', now(), ";
-        $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
+    move_uploaded_file($post_image_temp, "../images/$post_image");
 
-        $create_post_query = mysqli_query($connection, $query);
-        confirm_query($connection, $create_post_query);
-        header("Location: posts.php?upload=success");
-    }
+    $query = "INSERT INTO posts";
+    $query .= "(post_lens_id, post_title, post_author, post_date, post_image, ";
+    $query .= "post_content, post_tags, post_status) ";
+    $query .= "VALUES ('{$post_lens_id}', '{$post_title}', '{$post_author}', now(), ";
+    $query .= "'{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}')";
+
+    $create_post_query = mysqli_query($connection, $query);
+    confirm_query($connection, $create_post_query);
+    header("Location: posts.php?upload=success");
+}
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title">Post Title</label>
-            <input type="text" class="form-control" name="title">
+        <input type="text" class="form-control" name="title">
     </div>
     <div class="form-group">
         <label for="post_lens">Choose Post Lens</label>
         <select name="post_lens_id" id="">
             <?php
-                $query = "SELECT * FROM lenses";
-                $select_lens = mysqli_query($connection, $query);
-                confirm_query($connection, $select_lens);
-                
-                //WHILE LOOP MIGHT BE OBSOLETE HERE
-                while ($row = mysqli_fetch_assoc($select_lens)) {
-                    $lens_id = $row['lens_id'];
-                    $lens_name = $row['lens_name'];   
-                
-                    echo "<option value='{$lens_id}'>{$lens_name}</option>";
-                } 
+            $query = "SELECT * FROM lenses";
+            $select_lens = mysqli_query($connection, $query);
+            confirm_query($connection, $select_lens);
+
+            //WHILE LOOP MIGHT BE OBSOLETE HERE
+            while ($row = mysqli_fetch_assoc($select_lens)) {
+                $lens_id = $row['lens_id'];
+                $lens_name = $row['lens_name'];
+
+                echo "<option value='{$lens_id}'>{$lens_name}</option>";
+            }
             ?>
         </select>
     </div>
