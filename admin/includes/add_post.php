@@ -40,12 +40,14 @@ if (isset($_POST['create_post'])) {
             $select_lens = mysqli_query($connection, $query);
             confirm_query($connection, $select_lens);
 
-            //WHILE LOOP MIGHT BE OBSOLETE HERE
             while ($row = mysqli_fetch_assoc($select_lens)) {
                 $lens_id = $row['lens_id'];
                 $lens_name = $row['lens_name'];
+                $lens_status = $row['lens_status'];
 
-                echo "<option value='{$lens_id}'>{$lens_name}</option>";
+                if ($lens_status == 'approved') {
+                    echo "<option value='{$lens_id}'>{$lens_name}</option>";
+                }
             }
             ?>
         </select>
@@ -54,6 +56,7 @@ if (isset($_POST['create_post'])) {
         <label for="title">Post Author</label>
         <input type="text" class="form-control" name="author">
     </div>
+    <?php if (isAdmin()): ?>
     <div class="form-group">
         <label for="post_status">Post Status</label>
         <select name="post_status" id="">
@@ -62,6 +65,7 @@ if (isset($_POST['create_post'])) {
             <option value="draft">Draft</option>
         </select>
     </div>
+    <?php endif; ?>
     <div class="form-group">
         <label for="post_image">Post Image</label>
         <input type="file" name="image">

@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        Welcome to admin
+                        Welcome to <?php echo $_SESSION['user_role']; ?> menu
                         <small><?php echo $_SESSION['username']; ?></small>
                     </h1>
                     <div class="col-xs-6">
@@ -40,13 +40,36 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>id</th>
                                 <th>Lens Name</th>
+                                <th>Status</th>
+                                <?php if (isAdmin()): ?>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
+                                    <th>Approve</th>
+                                    <th>Unapprove</th>
+                                <?php endif; ?>
                             </tr>
                             </thead>
                             <tbody>
-                            <?php find_all_lenses($connection); ?> <!--FIND LENSES QUERY-->
-                            <?php delete_lens($connection); ?><!--DELETE LENSES QUERY-->
+                                <?php list_lenses_html($connection); ?> <!--LIST LENSES QUERY-->
+                                <?php delete_lens($connection); ?><!--DELETE LENSES QUERY-->
+                                <?php
+                                    if (isset($_GET['approve'])) {
+                                        $lens_to_approve_id = $_GET['approve'];
+
+                                        $query = "UPDATE lenses SET lens_status = 'approved' WHERE lens_id = {$lens_to_approve_id}";
+                                        $approve_query = mysqli_query($connection, $query);
+                                        header("Location: lenses.php");
+                                    }
+
+                                    if (isset($_GET['unapprove'])) {
+                                        $lens_to_unapprove_id = $_GET['unapprove'];
+
+                                        $query = "UPDATE lenses SET lens_status = 'unapproved' WHERE lens_id = {$lens_to_unapprove_id}";
+                                        $unapprove_query = mysqli_query($connection, $query);
+                                        header("Location: lenses.php");
+                                    }
+                                ?>
                             </tbody>
                         </table>
                     </div>

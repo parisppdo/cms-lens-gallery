@@ -1,4 +1,5 @@
 <?php
+if (isSubscriber()) header("Location: ./index.php");
 if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
     echo "<p class='bg-success'><b>Post Added Successfully!</b></p>";
 }

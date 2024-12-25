@@ -21,7 +21,7 @@
 
             <!-- Data Tabs -->
 
-            <div class="row">
+            <div class="row" style="margin-bottom: 20px;">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -264,7 +264,7 @@
                             // That we make with a loop using PHP
                             // ['Posts', 1000]
                             <?php
-                            $element_text = ['admins', 'Subscribers'];
+                            $element_text = ['Administrators', 'Subscribers'];
                             $element_count = [$admin_count, $subscriber_count];
 
                             for ($i = 0; $i < 2; $i++) {
@@ -292,11 +292,14 @@
                     }
 
                 </script>
+
+                <!-- Google Charts -->
+
                 <table class="columns">
                     <tr>
-                        <td><div id="posts_chart" style="width: 'auto'; height: 500px;"></div></td>
-                        <td><div id="comments_chart" style="width: 'auto'; height: 500px;"></div></td>
-                        <td><div id="users_chart" style="width: 'auto'; height: 500px;"></div></td>
+                        <td style="padding-right: 20px;"><div id="posts_chart" style="width: 'auto'; height: 500px;"></div> </td>
+                        <td style="padding-right: 20px;"><div id="comments_chart" style="width: 'auto'; height: 500px;"></div> </td>
+                        <td style="padding-right: 20px;"><div id="users_chart" style="width: 'auto'; height: 500px;"></div></td>
                     </tr>
                 </table>
             </div>

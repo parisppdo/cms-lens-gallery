@@ -55,7 +55,7 @@ function add_lens($connection)
     }
 }
 
-function find_all_lenses($connection)
+function list_lenses_html($connection)
 {
     $query = "SELECT * FROM lenses";
     $select_lenses = mysqli_query($connection, $query);
@@ -63,12 +63,17 @@ function find_all_lenses($connection)
     while ($row = mysqli_fetch_assoc($select_lenses)) {
         $lens_id = $row['lens_id'];
         $lens_name = $row['lens_name'];
+        $lens_status = $row['lens_status'];
 
         echo "<tr>";
-        echo "<td>{$lens_id}</td>";
         echo "<td>{$lens_name}</td>";
-        echo "<td><a href='lenses.php?delete={$lens_id}'>Delete</a></td>";
-        echo "<td><a href='lenses.php?edit={$lens_id}'>Edit</a></td>";
+        echo "<td>{$lens_status}</td>";
+        if (isAdmin()){
+            echo "<td><a href='lenses.php?delete={$lens_id}'>Delete</a></td>";
+            echo "<td><a href='lenses.php?edit={$lens_id}'>Edit</a></td>";
+            echo "<td><a href='lenses.php?approve={$lens_id}'>Approve</a></td>";
+            echo "<td><a href='lenses.php?unapprove={$lens_id}'>Unapprove</a></td>";
+        }
         echo "<tr>";
     }
 }

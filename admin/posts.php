@@ -1,5 +1,4 @@
 <?php include "includes/admin_header.php"; ?>
-<?php if (isSubscriber()) header("Location: ./index.php"); ?>
 
     <div id="wrapper">
 
@@ -14,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        Welcome to admin
+                        Welcome to <?php echo $_SESSION['user_role']; ?> menu
                         <small><?php echo $_SESSION['username']; ?></small>
                     </h1>
                     <?php
