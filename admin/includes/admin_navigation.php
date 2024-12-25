@@ -46,6 +46,9 @@
                     </li>
                     <?php endif; ?>
                     <li>
+                        <a href="./posts.php?source=my_posts"> View my posts </a>
+                    </li>
+                    <li>
                         <a href="posts.php?source=add_post"> Add posts </a>
                     </li>
                 </ul>

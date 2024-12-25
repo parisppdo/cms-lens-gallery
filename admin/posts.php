@@ -23,6 +23,10 @@
                         $source = '';
                     }
                     switch ($source) {
+                        case 'my_posts';
+                            include "includes/view_my_posts.php";
+                            break;
+
                         case 'add_post';
                             include "includes/add_post.php";
                             break;
