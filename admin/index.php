@@ -19,7 +19,7 @@
             </div>
             <!-- /.row -->
 
-            <!-- /.row -->
+            <!-- Data Tabs -->
 
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -117,7 +117,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-list fa-5x"></i>
+                                    <i class="fa fa-camera-retro fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <?php
@@ -143,6 +143,8 @@
             </div>
             <!-- /.row -->
 
+            <!-- Collect Data for Charts -->
+
             <?php
             $query = "SELECT * FROM posts WHERE post_status = 'published'";
             $select_all_published_posts = mysqli_query($connection, $query);
@@ -159,44 +161,145 @@
             $query = "SELECT * FROM users WHERE user_role = 'subscriber'";
             $select_all_subscribers = mysqli_query($connection, $query);
             $subscriber_count = mysqli_num_rows($select_all_subscribers);
+
+            $query = "SELECT * FROM users WHERE user_role = 'admin'";
+            $select_all_admins = mysqli_query($connection, $query);
+            $admin_count = mysqli_num_rows($select_all_admins);
             ?>
 
+            <!-- Chart Scripts -->
             <div class="row">
                 <script type="text/javascript">
+                    // Load Charts and the bar package.
                     google.charts.load('current', {'packages': ['bar']});
-                    google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
+                    // Draw the bar chart for Posts.
+                    google.charts.setOnLoadCallback(drawPostsChart);
+
+                    // Draw the bar chart for Comments.
+                    google.charts.setOnLoadCallback(drawCommentsChart);
+
+                    // Draw the bar chart for Users.
+                    google.charts.setOnLoadCallback(drawUsersChart);
+
+                    // Callback that draws the bar chart for Posts
+                    function drawPostsChart() {
                         var data = google.visualization.arrayToDataTable([
                             ['Data', 'Count'],
-                            <?php
-                            $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Lenses'];
-                            $element_count = [$post_count, $published_post_count, $draft_post_count, $comment_count, $unapproved_comment_count, $user_count, $subscriber_count, $lens_count];
 
-                            for ($i = 0; $i < 8; $i++) {
+                            // Below is the javascript prototype of the array
+                            // That we make with a loop using PHP
+                            // ['Posts', 1000]
+                            <?php
+                            $element_text = ['All Posts', 'Active Posts', 'Draft Posts'];
+                            $element_count = [$post_count, $published_post_count, $draft_post_count];
+
+                            for ($i = 0; $i < 3; $i++) {
                                 echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
                             }
                             ?>
-                            // Below is the javascript prototype of the array 
-                            // That we make with a loop using PHP
-                            // ['Posts', 1000]
+
                         ]);
 
+                        // Set options for Posts chart.
                         var options = {
+                            legend: { position: 'none' },
+                            axes: {
+                                x: {
+                                    0: {label: ''}
+                                }
+                            },
                             chart: {
-                                title: '',
-                                subtitle: '',
+                                title: 'Posts Chart'
+                                }
+                        };
+
+                        // Instantiate and draw the chart for Posts.
+                        var chart = new google.charts.Bar(document.getElementById('posts_chart'));
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+                    }
+
+                    // Callback that draws the bar chart for Comments
+                    function drawCommentsChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Data', 'Count'],
+
+                            // Below is the javascript prototype of the array
+                            // That we make with a loop using PHP
+                            // ['Posts', 1000]
+                            <?php
+                            $element_text = ['Comments', 'Pending Comments'];
+                            $element_count = [$comment_count, $unapproved_comment_count];
+
+                            for ($i = 0; $i < 2; $i++) {
+                                echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+                            }
+                            ?>
+                        ]);
+
+                        // Set options for Comments chart.
+                        var options = {
+                            legend: { position: 'none' },
+                            axes: {
+                                x: {
+                                    0: {label: ''}
+                                }
+                            },
+                            chart: {
+                                title: 'Comments Chart'
                             }
                         };
 
-                        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
+                        // Instantiate and draw the chart for Comments.
+                        var chart = new google.charts.Bar(document.getElementById('comments_chart'));
                         chart.draw(data, google.charts.Bar.convertOptions(options));
                     }
-                </script>
-                <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
-            </div>
 
+                    // Callback that draws the bar chart for Users
+                    function drawUsersChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Data', 'Count'],
+
+                            // Below is the javascript prototype of the array
+                            // That we make with a loop using PHP
+                            // ['Posts', 1000]
+                            <?php
+                            $element_text = ['admins', 'Subscribers'];
+                            $element_count = [$admin_count, $subscriber_count];
+
+                            for ($i = 0; $i < 2; $i++) {
+                                echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+                            }
+                            ?>
+                        ]);
+
+                        // Set options for Users chart.
+                        var options = {
+                            legend: { position: 'none' },
+                            axes: {
+                                x: {
+                                    0: {label: ''}
+                                }
+                            },
+                            chart: {
+                                title: 'Users Chart'
+                            }
+                        };
+
+                        // Instantiate and draw the chart for Comments.
+                        var chart = new google.charts.Bar(document.getElementById('users_chart'));
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+                    }
+
+                </script>
+                <table class="columns">
+                    <tr>
+                        <td><div id="posts_chart" style="width: 'auto'; height: 500px;"></div></td>
+                        <td><div id="comments_chart" style="width: 'auto'; height: 500px;"></div></td>
+                        <td><div id="users_chart" style="width: 'auto'; height: 500px;"></div></td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <!-- /.container-fluid -->
 
