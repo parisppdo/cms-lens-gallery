@@ -16,9 +16,13 @@ while ($row = mysqli_fetch_assoc($select_users_by_id)) {
     $user_email = $row['user_email'];
 }
 
-if (isset($_POST['edit_user'])) {
+if (isset($_POST['edit_user']) && !empty($_POST['user_password'])) {
     $username = $_POST['username'];
+
     $user_password = $_POST['user_password'];
+    $salt = '$2y$10$iusesomecrazystrings22';
+    $user_password = crypt($user_password, $salt);
+
     $user_role = $_POST['user_role'];
     $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
@@ -37,6 +41,27 @@ if (isset($_POST['edit_user'])) {
     confirm_query($connection, $update_user);
     header("Location: users.php");
 }
+
+if (isset($_POST['edit_user']) && empty($_POST['user_password'])) {
+    $username = $_POST['username'];
+    $user_role = $_POST['user_role'];
+    $user_firstname = $_POST['user_firstname'];
+    $user_lastname = $_POST['user_lastname'];
+    $user_email = $_POST['user_email'];
+
+    $query = "UPDATE users SET ";
+    $query .= "username = '{$username}', ";
+    $query .= "user_role = '{$user_role}', ";
+    $query .= "user_firstname = '{$user_firstname}', ";
+    $query .= "user_lastname = '{$user_lastname}', ";
+    $query .= "user_email = '{$user_email}' ";
+    $query .= "WHERE user_id = {$user_to_edit_id}";
+
+    $update_user = mysqli_query($connection, $query);
+    confirm_query($connection, $update_user);
+    header("Location: users.php");
+}
+
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -47,7 +72,7 @@ if (isset($_POST['edit_user'])) {
 
     <div class="form-group">
         <label for="">Password</label>
-        <input type="password" class="form-control" name="user_password" value="<?php echo $user_password; ?>">
+        <input type="password" class="form-control" name="user_password" placeholder="leave empty if you do not want it to change">
     </div>
 
     <div class="form-group">
