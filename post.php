@@ -1,5 +1,44 @@
 <?php include "includes/header.php"; ?>
 
+<?php
+// Comment submition logic is put before page to avoid "Warning: Cannot modify header information - headers already sent by..."
+if (isset($_POST['create_comment'])) {
+    $post_id = $_GET['p_id'];
+
+    $comment_author = $_POST['comment_author'];
+    $comment_email = $_POST['comment_email'];
+    $comment_content = $_POST['comment_content'];
+
+    if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+        $query = "INSERT INTO comments (";
+        $query .= "comment_post_id, ";
+        $query .= "comment_author, ";
+        $query .= "comment_email, ";
+        $query .= "comment_content, ";
+        $query .= "comment_status, ";
+        $query .= "comment_date) ";
+        $query .= "VALUES (";
+        $query .= "$post_id, ";
+        $query .= "'{$comment_author}', ";
+        $query .= "'{$comment_email}', ";
+        $query .= "'{$comment_content}', ";
+        $query .= "'unapproved', ";
+        $query .= "now())";
+
+        $create_comment_query = mysqli_query($connection, $query);
+        confirm_query($connection, $create_comment_query);
+
+        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+        $query .= "WHERE post_id = {$post_id}";
+        $increase_comment_count = mysqli_query($connection, $query);
+        confirm_query($connection, $increase_comment_count);
+        header("Location: post.php?p_id={$post_id}&action=submitted");
+    } else {
+        echo "<script>alert('Fields cannot be empty')</script>";
+    }
+}
+?>
+
     <!-- Navigation -->
 <?php include "includes/navigation.php"; ?>
 
@@ -26,6 +65,7 @@
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = $row['post_content'];
+                    $post_status = $row['post_status'];
                     $post_tags = $row['post_tags'];
                     $post_tags = preg_replace('/\s*,\s*/', ',', $post_tags); // removes space before and after comma
                     $post_tags = explode(',', $post_tags);
@@ -44,6 +84,7 @@
                     ?>
 
                     <!-- First Blog Post -->
+                    <?php if ($post_status == 'published'): ?>
                     <h2>
                         <a href="#"><?php echo $post_title ?></a>
                     </h2>
@@ -67,6 +108,11 @@
                         ?>
                     </div>
                     <hr>
+                    <?php else: ?>
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Warning!</strong> Post not yet approved!
+                        </div>
+                    <?php endif; ?>
                     <?php
 
                 }
@@ -75,43 +121,7 @@
             }
             ?>
             <!-- Blog Comments -->
-            <?php
-            if (isset($_POST['create_comment'])) {
-                $post_id = $_GET['p_id'];
 
-                $comment_author = $_POST['comment_author'];
-                $comment_email = $_POST['comment_email'];
-                $comment_content = $_POST['comment_content'];
-
-                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
-                    $query = "INSERT INTO comments (";
-                    $query .= "comment_post_id, ";
-                    $query .= "comment_author, ";
-                    $query .= "comment_email, ";
-                    $query .= "comment_content, ";
-                    $query .= "comment_status, ";
-                    $query .= "comment_date) ";
-                    $query .= "VALUES (";
-                    $query .= "$post_id, ";
-                    $query .= "'{$comment_author}', ";
-                    $query .= "'{$comment_email}', ";
-                    $query .= "'{$comment_content}', ";
-                    $query .= "'unapproved', ";
-                    $query .= "now())";
-
-                    $create_comment_query = mysqli_query($connection, $query);
-                    confirm_query($connection, $create_comment_query);
-
-                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                    $query .= "WHERE post_id = {$post_id}";
-                    $increase_comment_count = mysqli_query($connection, $query);
-                    confirm_query($connection, $increase_comment_count);
-                    header("Location: post.php?p_id=23&action=submitted");
-                } else {
-                    echo "<script>alert('Fields cannot be empty')</script>";
-                }
-            }
-            ?>
             <!-- Comments Form -->
             <div class="well">
                 <h4>Leave a Comment:</h4>
