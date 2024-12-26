@@ -5,7 +5,11 @@ if (isset($_GET['upload']) && $_GET['upload'] == 'success') {
 
 if (isset($_POST['create_user'])) {
     $username = $_POST['username'];
+
     $user_password = $_POST['user_password'];
+    $salt = '$2y$10$iusesomecrazystrings22';
+    $user_password = crypt($user_password, $salt);
+
     $user_role = $_POST['user_role'];
     $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
