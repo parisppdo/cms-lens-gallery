@@ -9,7 +9,8 @@ if (isset($_POST['create_post'])) {
     $post_image = $_FILES['image']['name'];
     $post_image_temp = $_FILES['image']['tmp_name'];
 
-    $post_tags = $_POST['post_tags'];
+    $post_tags = trim($_POST['post_tags']);
+    $post_tags = preg_replace('/\s*,\s*/', ',', $post_tags); // removes space before and after comma
     $post_content = $_POST['post_content'];
     $post_date = date('d-m-y');
 
@@ -73,6 +74,7 @@ if (isset($_POST['create_post'])) {
     <div class="form-group">
         <label for="post_tags">Post Tags</label>
         <input type="text" class="form-control" name="post_tags">
+        <small class="form-text text-muted">Use a comma to separate tags (e.g., horror, movie, cinema).</small>
     </div>
     <div class="form-group">
         <label for="post_content">Post Content</label>

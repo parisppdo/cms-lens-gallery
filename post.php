@@ -26,6 +26,9 @@
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = $row['post_content'];
+                    $post_tags = $row['post_tags'];
+                    $post_tags = preg_replace('/\s*,\s*/', ',', $post_tags); // removes space before and after comma
+                    $post_tags = explode(',', $post_tags);
                     ?>
                     <h1 class="page-header">
                         Vintage Lens Blog<br>
@@ -52,6 +55,17 @@
                     <img class="img-responsive" src="images/<?php echo $post_image ?>" alt="">
                     <hr>
                     <p><?php echo $post_content ?></p>
+                    <div class="post-tags">
+                        <strong>Tags:</strong>
+                        <?php
+                        foreach ($post_tags as $tag) {
+                            echo "<form method='POST' action='search.php' style='display:inline;'>
+                                    <input type='hidden' name='search' value='" . htmlspecialchars($tag) . "'>
+                                    <button name='submit' type='submit' class='btn btn-default btn-xs'>" . htmlspecialchars($tag) . "</button>
+                                    </form> ";
+                        }
+                        ?>
+                    </div>
                     <hr>
                     <?php
 
@@ -135,9 +149,6 @@
                 ?>
                 <!-- Comment -->
                 <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
                     <div class="media-body">
                         <h4 class="media-heading"><?php echo $comment_author; ?>
                             <small><?php echo $comment_date; ?></small>
