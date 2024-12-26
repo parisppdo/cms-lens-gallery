@@ -38,6 +38,7 @@ if (isset($_POST['update_post'])) {
     $post_image_temp = $_FILES['image']['tmp_name'];
     $post_content = $_POST['post_content'];
     $post_tags = $_POST['post_tags'];
+    $post_tags = preg_replace('/\s*,\s*/', ',', $post_tags);
 
     move_uploaded_file($post_image_temp, "../images/$post_image");
     if (empty($post_image)) {
@@ -106,6 +107,7 @@ if (isset($_POST['reset_views'])) {
         <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="author">
     </div>
 
+    <?php if (isAdmin()): ?>
     <div class="form-group">
         <label for="">Select Status</label>
         <select name="post_status" id="">
@@ -121,6 +123,7 @@ if (isset($_POST['reset_views'])) {
             ?>
         </select>
     </div>
+    <?php endif; ?>
 
     <div class="form-group">
         <label for="post_image">Post Image</label>
@@ -134,6 +137,7 @@ if (isset($_POST['reset_views'])) {
     <div class="form-group">
         <label for="post_tags">Post Tags</label>
         <input value="<?php echo $post_tags; ?>" type="text" class="form-control" name="post_tags">
+        <small class="form-text text-muted">Use a comma to separate tags (e.g., horror, movie, cinema).</small>
     </div>
 
     <div class="form-group">

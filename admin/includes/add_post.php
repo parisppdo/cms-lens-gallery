@@ -4,7 +4,8 @@ if (isset($_POST['create_post'])) {
     $post_title = $_POST['title'];
     $post_author = $_POST['author'];
     $post_lens_id = $_POST['post_lens_id'];
-    $post_status = $_POST['post_status'];
+
+    $post_status = $_POST['post_status']=="" ? "draft" : $_POST['post_status'];
 
     $post_image = $_FILES['image']['name'];
     $post_image_temp = $_FILES['image']['tmp_name'];
