@@ -17,22 +17,34 @@
     </div>
 
     <!-- Login -->
-    <div class="well">
-        <h4>Admin Login</h4>
-        <form action="includes/login.php" method="POST">
-            <div class="form-group">
-                <input name="username" type="text" class="form-control" placeholder="Enter Username">
-            </div>
-            <div class="input-group">
-                <input name="password" type="password" class="form-control" placeholder="Enter Password">
-                <span class="input-group-btn">
-                                <button class="btn btn-primary" name="login" type="submit">Submit</button>
-                            </span>
-            </div>
-        </form>
-        <!-- /.input-group -->
-    </div>
-
+    <?php if (($_SESSION['user_role']) === 'user'): ?>
+        <div class="well">
+            <h4>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h4>
+            <p class="text-warning">Your registration is yet to be approved!</p>
+            <a href="./includes/logout.php" class="btn btn-info btn-xs">Log Out</a>
+        </div>
+    <?php elseif (($_SESSION['user_role']) === 'admin' || ($_SESSION['user_role']) === 'subscriber'): ?>
+        <div class="well">
+            <h4>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h4>
+            <a href="./includes/logout.php" class="btn btn-info btn-xs">Log Out</a>
+        </div>
+    <?php else: ?>
+        <div class="well">
+            <h4>Admin Login</h4>
+            <form action="includes/login.php" method="POST">
+                <div class="form-group">
+                    <input name="username" type="text" class="form-control" placeholder="Enter Username">
+                </div>
+                <div class="input-group">
+                    <input name="password" type="password" class="form-control" placeholder="Enter Password">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" name="login" type="submit">Submit</button>
+                    </span>
+                </div>
+            </form>
+            <!-- /.input-group -->
+        </div>
+    <?php endif; ?>
     <!-- Blog Categories Well -->
 
     <div class="well">

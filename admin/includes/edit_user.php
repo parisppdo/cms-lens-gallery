@@ -78,12 +78,22 @@ if (isset($_POST['edit_user']) && empty($_POST['user_password'])) {
     <div class="form-group">
         <label for="role">Select Role</label>
         <select name="user_role" id="role">
-            <option value="subscriber"><?php echo $user_role; ?></option>
             <?php
             if ($user_role == 'admin') {
-                echo "<option value='subscriber'>subscriber</option>";
-            } else {
-                echo "<option value='admin'>admin</option>";
+                echo "<option value='admin'>Admin</option>";
+                echo "<option value='subscriber'>Subscriber</option>";
+                echo "<option value='user'>Pending User</option>";
+            }
+            elseif ($user_role == 'subscriber') {
+                echo "<option value='subscriber'>Subscriber</option>";
+                echo "<option value='admin'>Admin</option>";
+                echo "<option value='user'>Pending User</option>";
+            }
+            else {
+                echo "<option value='user'>Pending User</option>";
+                echo "<option value='subscriber'>Subscriber</option>";
+                echo "<option value='admin'>Admin</option>";
+
             }
             ?>
         </select>

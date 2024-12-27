@@ -5,7 +5,7 @@
 
 <?php
 // All logged in users can enter. Admins & subscribers
-if (isUser()) {
+if (isNotRegistered() || isUser()) {
     header("Location: ../index.php");
 }
 ?>

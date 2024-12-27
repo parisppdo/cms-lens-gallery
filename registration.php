@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
         $password = crypt($password, $salt);
 
         $query = "INSERT INTO users (username, user_email, user_password, user_role) ";
-        $query .= "VALUES('{$username}', '{$email}','{$password}', 'subscriber')";
+        $query .= "VALUES('{$username}', '{$email}','{$password}', 'user')";
         $register_user_query = mysqli_query($connection, $query);
         confirm_query($connection, $register_user_query);
 

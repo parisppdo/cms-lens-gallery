@@ -95,8 +95,10 @@ function isAdmin() {
 function isSubscriber() {
     return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'subscriber';
 }
-
 function isUser() {
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'user';
+}
+function isNotRegistered() {
     return !isset($_SESSION['user_role']);
 }
 ?>
