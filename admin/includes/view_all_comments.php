@@ -1,7 +1,6 @@
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
-        <th>id</th>
         <th>Author</th>
         <th>Comment</th>
         <th>Email</th>
@@ -28,7 +27,6 @@
         $comment_date = $row['comment_date'];
 
         echo "<tr>";
-        echo "<td>$comment_id</td>";
         echo "<td>$comment_author</td>";
         echo "<td>$comment_content</td>";
 
