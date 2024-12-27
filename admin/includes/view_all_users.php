@@ -1,7 +1,6 @@
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
-        <th>id</th>
         <th>Username</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -11,7 +10,7 @@
     </thead>
     <tbody>
     <?php
-    $query = "SELECT * FROM users";
+    $query = "SELECT * FROM users ORDER BY user_id DESC";
     $select_users = mysqli_query($connection, $query);
 
     while ($row = mysqli_fetch_assoc($select_users)) {
@@ -25,7 +24,6 @@
         $user_role = $row['user_role'];
 
         echo "<tr>";
-        echo "<td>$user_id</td>";
         echo "<td>$username</td>";
         echo "<td>$user_firstname</td>";
 
