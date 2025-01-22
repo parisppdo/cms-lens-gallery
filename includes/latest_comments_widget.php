@@ -3,7 +3,7 @@
     <ul style="list-style-type: none;">
         <?php
         $query = "SELECT post_id, comment_author, post_title
-                    FROM posts JOIN comments WHERE comment_post_id = post_id
+                    FROM posts JOIN comments WHERE comment_post_id = post_id AND comment_status = 'approved'
                     ORDER BY comment_id DESC
                     LIMIT 5;";
         $select_latest_comments_query = mysqli_query($connection, $query);
