@@ -1,5 +1,5 @@
 <div class="well">
-    <h4>Latest Posts</h4>
+    <h4>Latest Comments</h4>
     <ul style="list-style-type: none;">
         <?php
         $query = "SELECT post_id, comment_author, post_title

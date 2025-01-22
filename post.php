@@ -61,11 +61,13 @@ if (isset($_POST['create_comment'])) {
                 $views_query = mysqli_query($connection, $query);
                 confirm_query($connection, $views_query);
 
-                $query = "SELECT * FROM posts WHERE post_id = {$post_id}";
+                $query = "SELECT * FROM posts JOIN lenses ON lens_id = post_lens_id WHERE post_id = {$post_id}";
                 $select_all_posts_query = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                     $post_title = $row['post_title'];
                     $post_author = $row['post_author'];
+                    $lens_id = $row['lens_id'];
+                    $lens_name = $row['lens_name'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = $row['post_content'];
@@ -73,7 +75,7 @@ if (isset($_POST['create_comment'])) {
                     $post_tags = $row['post_tags'];
                     $post_tags = preg_replace('/\s*,\s*/', ',', $post_tags); // removes space before and after comma
                     $post_tags = explode(',', $post_tags);
-                    ?>
+            ?>
                     <h1 class="page-header">
                         Vintage Lens Blog<br>
                         <small>Photos by old manual lenses!</small>
@@ -111,6 +113,14 @@ if (isset($_POST['create_comment'])) {
                         }
                         ?>
                     </div>
+
+                        <div class="post-tags">
+                            <strong>Lens:</strong>
+                            <?php
+                                echo "<a href=lens.php?lens_id={$lens_id}>{$lens_name}</a>";
+                            ?>
+                        </div>
+
                     <hr>
                     <?php else: ?>
                         <div class="alert alert-warning" role="alert">
