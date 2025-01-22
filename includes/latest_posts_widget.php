@@ -2,7 +2,7 @@
     <h4>Latest Posts</h4>
     <ol>
         <?php
-        $query = "SELECT * FROM posts ORDER BY post_id DESC LIMIT 5";
+        $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC LIMIT 5";
         $select_latest_posts_query = mysqli_query($connection, $query);
 
         while ($row = mysqli_fetch_assoc($select_latest_posts_query)) {
