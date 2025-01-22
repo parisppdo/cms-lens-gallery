@@ -17,6 +17,11 @@ if (isset($_POST['create_post'])) {
 
     move_uploaded_file($post_image_temp, "../images/$post_image");
 
+    $post_title = mysqli_real_escape_string($connection, $post_title);
+    $post_author = mysqli_real_escape_string($connection, $post_author);
+    $post_tags = mysqli_real_escape_string($connection, $post_tags);
+    $post_content = mysqli_real_escape_string($connection, $post_content);
+
     $query = "INSERT INTO posts";
     $query .= "(post_lens_id, post_title, post_author, post_date, post_image, ";
     $query .= "post_content, post_tags, post_status) ";
