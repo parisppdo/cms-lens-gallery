@@ -1,6 +1,11 @@
 <?php include "./admin/functions.php"; ?>
 <?php include "includes/db.php"; ?>
-<?php session_start(); ?>
+<?php session_start();
+if (!isset($_SESSION['user_role'])) {
+    $_SESSION['user_role'] = 'viewer';
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Vintage Lens Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

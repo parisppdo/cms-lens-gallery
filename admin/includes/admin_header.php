@@ -5,7 +5,7 @@
 
 <?php
 // All logged in users can enter. Admins & subscribers
-if (isNotRegistered() || isUser()) {
+if (isNotRegistered() || isUser() || $_SESSION['user_role'] == 'viewer') {
     header("Location: ../index.php");
 }
 ?>
@@ -21,7 +21,7 @@ if (isNotRegistered() || isUser()) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>Admin - Vintage lens blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
