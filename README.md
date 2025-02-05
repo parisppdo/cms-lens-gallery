@@ -15,6 +15,7 @@ Lens Gallery CMS is a PHP-based content management system tailored for photograp
 - **User Management**: Administrators can manage subscribers and control access.
 - **Subscriber Contributions**: Trusted users can upload and manage their own photos.
 - **Responsive Design**: Optimized for various devices to ensure a seamless user experience.
+- **Database Initialization**: Includes a database setup file at sql/schema.sql for easy installation
 
 ## 📌 Usage
 1. **Administrator**:
