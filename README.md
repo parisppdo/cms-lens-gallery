@@ -34,4 +34,3 @@ Lens Gallery CMS is a PHP-based content management system tailored for photograp
 
 ---
 
-For more details and updates, visit the [project repository](https://github.com/parisppdo/cms-lens-gallery).
